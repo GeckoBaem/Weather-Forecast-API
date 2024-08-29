@@ -1,0 +1,23 @@
+<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="127.575" cy="127.575" r="127.575" transform="rotate(-90 127.575 127.575)" fill="url(#paint0_linear_21_76)"/>
+<mask id="mask0_21_76" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="0" y="0" width="256" height="256">
+<circle cx="127.575" cy="127.575" r="127.575" transform="rotate(-90 127.575 127.575)" fill="#FFD850"/>
+</mask>
+<g mask="url(#mask0_21_76)">
+<g filter="url(#filter0_f_21_76)">
+<circle cx="42.9186" cy="58.669" r="48.4313" transform="rotate(-90 42.9186 58.669)" fill="white"/>
+</g>
+</g>
+<defs>
+<filter id="filter0_f_21_76" x="-80.5127" y="-64.7623" width="246.862" height="246.863" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<feFlood flood-opacity="0" result="BackgroundImageFix"/>
+<feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape"/>
+<feGaussianBlur stdDeviation="37.5" result="effect1_foregroundBlur_21_76"/>
+</filter>
+<linearGradient id="paint0_linear_21_76" x1="164.981" y1="0.00014799" x2="45.675" y2="238.613" gradientUnits="userSpaceOnUse">
+<stop stop-color="#EACC60"/>
+<stop offset="0.614" stop-color="#FFA740"/>
+<stop offset="0.984" stop-color="#E88510"/>
+</linearGradient>
+</defs>
+</svg>

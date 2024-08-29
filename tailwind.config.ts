@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import tailwindScrollBarHide from 'tailwind-scrollbar-hide';
 
 const config: Config = {
   content: [
@@ -8,13 +9,35 @@ const config: Config = {
   ],
   theme: {
     extend: {
-      backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      keyframes: {
+        'fade-in': {
+          '0%': {
+            opacity: '0',
+            transform: 'translateY(2vh)',
+          },
+          '100%': {
+            opacity: '1',
+          },
+        },
+        "float": {
+          "0%": {
+            transform: 'translateY(1vh)'
+          },
+          "50%": {
+            transform: 'translateY(-1vh)'
+          },
+          "100%": {
+            transform: 'translateY(1vh)'
+          },
+        },
+      },
+
+      animation: {
+        'fade-in': 'fade-in 0.5s ease-out',
+        'float': 'float 5s ease-in-out infinite'
       },
     },
   },
-  plugins: [],
+  plugins: [ tailwindScrollBarHide ],
 };
 export default config;
