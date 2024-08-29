@@ -1,16 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    experimental: {
-        serverActions: true,
-    },
-    webpack(config, options) {
-        config.module.rules.push({
-            test: /\.svg$/,
-            use: ['@svgr/webpack'],
-        });
-
-        return config;
-    },
+    // experimental: {
+    //     serverActions: true,
+    // },  
+    output: 'export'
 };
 
 export default nextConfig;
