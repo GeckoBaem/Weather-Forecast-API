@@ -78,10 +78,10 @@ jobs:
           echo "WEATHER_API_KEY=${{ secrets.WEATHER_API_KEY }}" >> .env
           echo "GEOLOCATION_API_KEY=${{ secrets.GEOLOCATION_API_KEY }}" >> .env
           echo "GEOCODER_API_KEY=${{ secrets.GEOCODER_API_KEY }}" >> .env
-      - name: Build with Next.js
-        run: npx next build
       - name: Debug
         run: ls
+      - name: Build with Next.js
+        run: npx next build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
