@@ -42,9 +42,9 @@ export default function TodaySection(weatherData: WeatherJsonData) {
                     <div className="p-4 sm:p-6">
                         <span className="text-[#6C7989] font-semibold text-sm sm:text-xl w-full">Today’s Weather Forecast</span>
                         {getTime.map((timeData, index) => (WeatherDisplay(timeData, getWeather[index], getTemp[index])))}
-                        {/* <div className="h-[50vh] w-full bg-gray flex justify-center items-center text-[#6C7989] font-semibold text-sm sm:text-xl">
+                        <div className="h-[50vh] w-full bg-gray flex justify-center items-center text-[#6C7989] font-semibold text-sm sm:text-xl">
                             To be Added in v2..
-                        </div> */}
+                        </div>
                     </div>
                 )
                 :

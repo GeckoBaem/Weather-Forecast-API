@@ -63,6 +63,7 @@ export default function Page() {
                 <span className="text-[#6C7989] font-semibold text-base sm:text-2xl absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">To be Added in v2..</span>
               </div>
             </div>
+            <div className="h-[100vh] w-full rounded-3xl"></div>
           </div>
         ) : (
           <div className="h-[125vh]">

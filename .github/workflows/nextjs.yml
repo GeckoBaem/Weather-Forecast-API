@@ -31,11 +31,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      - name:
-        run: |
-          echo "WEATHER_API_KEY=${{ secrets.WEATHER_API_KEY }}" >> .env
-          echo "GEOLOCATION_API_KEY=${{ secrets.GEOLOCATION_API_KEY }}" >> .env
-          echo "GEOCODER_API_KEY=${{ secrets.GEOCODER_API_KEY }}" >> .env
       - name: Detect package manager
         id: detect-package-manager
         run: |
@@ -78,6 +73,11 @@ jobs:
             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
+      - name: Create .env File
+        run: |
+          echo "WEATHER_API_KEY=${{ secrets.WEATHER_API_KEY }}" >> .env
+          echo "GEOLOCATION_API_KEY=${{ secrets.GEOLOCATION_API_KEY }}" >> .env
+          echo "GEOCODER_API_KEY=${{ secrets.GEOCODER_API_KEY }}" >> .env
       - name: Build with Next.js
         run: ${{ steps.detect-package-manager.outputs.runner }} next build
       - name: Upload artifact
