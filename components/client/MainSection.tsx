@@ -79,7 +79,7 @@ export default function MainSection(weatherData: WeatherJsonData) {
                             </div>
                         </div>
                         <div className="h-[15vh] sm:h-[30vh] w-auto relative py-[3vh] sm:py-[6vh] px-[5%]">
-                            <Image src={WeatherIcon(weatherData.translatedWeathers[0])!} alt="" width={1} height={1} style={{ objectFit: 'contain', width: "auto", height: '100%' }} className="min-w-[80px] animate-float" />
+                            <Image src={WeatherIcon(weatherData.translatedWeathers[0], clientHour)!} alt="" width={1} height={1} style={{ objectFit: 'contain', width: "auto", height: '100%' }} className="min-w-[80px] animate-float" />
                         </div>
                     </div>
                     :
@@ -103,7 +103,7 @@ export default function MainSection(weatherData: WeatherJsonData) {
                             </div>
                         </div>
                         <div className="h-[15vh] sm:h-[30vh] w-auto relative py-[3vh] sm:py-[6vh] px-[5%]">
-                            <Image src={WeatherIcon(weatherData.translatedWeathers[0])!} alt="" width={1} height={1} style={{ objectFit: 'contain', width: "auto", height: '100%' }} className="min-w-[80px] animate-float" />
+                            <Image src={WeatherIcon(weatherData.translatedWeathers[0], clientHour)!} alt="" width={1} height={1} style={{ objectFit: 'contain', width: "auto", height: '100%' }} className="min-w-[80px] animate-float" />
                         </div>
                     </div>
                     

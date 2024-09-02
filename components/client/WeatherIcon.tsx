@@ -1,5 +1,3 @@
-const clientHour = new Date().getHours();
-
 export function isDay(currentTime: number) {
 
     const throwData = currentTime < 19 && currentTime > 4 ? true : false;
@@ -7,17 +5,17 @@ export function isDay(currentTime: number) {
     return throwData;
 }
 
-export function WeatherIcon(weatherStatus: string) {
 
+export function WeatherIcon(weatherStatus: string, getClientTime: number) {
     switch (weatherStatus) {
         case '맑음':
-            if (isDay(clientHour)) {
+            if (isDay(getClientTime)) {
                 return "/static/images/normal-day.svg";
             } else {
                 return "/static/images/normal-night.svg";
             }
         case '구름 많음':
-            if (isDay(clientHour)) {
+            if (isDay(getClientTime)) {
                 return "/static/images/cloudy-day.svg";
             } else {
                 return "/static/images/cloudy-night.svg";
