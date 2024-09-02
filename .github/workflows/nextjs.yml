@@ -31,6 +31,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name:
+        run: |
+          echo "WEATHER_API_KEY=${{ secrets.WEATHER_API_KEY }}" >> .env
+          echo "GEOLOCATION_API_KEY=${{ secrets.GEOLOCATION_API_KEY }}" >> .env
+          echo "GEOCODER_API_KEY=${{ secrets.GEOCODER_API_KEY }}" >> .env
       - name: Detect package manager
         id: detect-package-manager
         run: |
