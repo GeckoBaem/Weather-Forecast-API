@@ -79,7 +79,7 @@ jobs:
           echo "GEOLOCATION_API_KEY=${{ secrets.GEOLOCATION_API_KEY }}" >> .env
           echo "GEOCODER_API_KEY=${{ secrets.GEOCODER_API_KEY }}" >> .env
       - name: Build with Next.js
-        run: ${{ steps.detect-package-manager.outputs.runner }} next build
+        run: npx next build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
