@@ -1,10 +1,9 @@
 'use client'
 
 import { useEffect, useState } from "react"
-import GetAddress, { GetAddressItem } from "@/components/server/GetAddress";
-import GetClientIp from "@/components/server/GetClientCoordinate";
-import { WeatherJsonData } from "@/components/server/WeatherApi";
-import { WeatherIcon, isDay } from "@/components/client/WeatherIcon";
+import { getClientIp } from "@/components/server/api-connecter";
+import { GetAddressItem, WeatherJsonData } from "@/helpers/types";
+import { getAddress, isDay, weatherIcon } from "@/helpers/data-processing";
 import Image from 'next/image'
 
 interface TempsItem {
@@ -35,15 +34,15 @@ export default function MainSection(weatherData: WeatherJsonData) {
 
     useEffect(() => {
         async function FetchClientData() {
-            const clientIp = await GetClientIp();
+            const clientIp = await getClientIp();
 
             const getLocalAddressData = await JSON.parse(localStorage.getItem('localAddressData')!);
             try {
                 if (await typeof window !== 'undefined') {
-                    if (getLocalAddressData && clientIp.clientIp == getLocalAddressData.clientIp) {
+                    if (getLocalAddressData && clientIp == getLocalAddressData.clientIp) {
                         setAddressData(getLocalAddressData);
                     } else {
-                        const addressData = await GetAddress();
+                        const addressData = await getAddress();
                         setAddressData(addressData);
                         localStorage.setItem('localAddressData', JSON.stringify(addressData));
                     }
@@ -79,7 +78,7 @@ export default function MainSection(weatherData: WeatherJsonData) {
                             </div>
                         </div>
                         <div className="h-[15vh] sm:h-[30vh] w-auto relative py-[3vh] sm:py-[6vh] px-[5%]">
-                            <Image src={WeatherIcon(weatherData.translatedWeathers[0], clientHour)!} alt="" width={1} height={1} style={{ objectFit: 'contain', width: "auto", height: '100%' }} className="min-w-[80px] animate-float" />
+                            <Image src={weatherIcon(weatherData.translatedWeathers[0], clientHour)!} alt="" width={1} height={1} style={{ objectFit: 'contain', width: "auto", height: '100%' }} className="min-w-[80px] animate-float" />
                         </div>
                     </div>
                     :
@@ -103,7 +102,7 @@ export default function MainSection(weatherData: WeatherJsonData) {
                             </div>
                         </div>
                         <div className="h-[15vh] sm:h-[30vh] w-auto relative py-[3vh] sm:py-[6vh] px-[5%]">
-                            <Image src={WeatherIcon(weatherData.translatedWeathers[0], clientHour)!} alt="" width={1} height={1} style={{ objectFit: 'contain', width: "auto", height: '100%' }} className="min-w-[80px] animate-float" />
+                            <Image src={weatherIcon(weatherData.translatedWeathers[0], clientHour)!} alt="" width={1} height={1} style={{ objectFit: 'contain', width: "auto", height: '100%' }} className="min-w-[80px] animate-float" />
                         </div>
                     </div>
                     

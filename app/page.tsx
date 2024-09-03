@@ -1,7 +1,8 @@
 "use client"
 
 import { useEffect, useState } from "react";
-import WeatherApi, { WeatherJsonData } from "@/components/server/WeatherApi";
+import { processWeatherRawData } from "@/helpers/data-processing";
+import { WeatherJsonData } from "@/helpers/types";
 import MainSection from "@/components/client/MainSection";
 import ChartSection from "@/components/client/ChartSection";
 import TodaySection from "@/components/client/TodaySection";
@@ -21,7 +22,8 @@ export default function Page() {
           if (getLocalWeatherData && baseDate === getLocalWeatherData.baseDate && baseTime === getLocalWeatherData.baseTime) {
             setWeatherData(await getLocalWeatherData);
           } else {
-            const weatherApiData = await WeatherApi();
+            const weatherApiData = await processWeatherRawData();
+            console.log("응디")
             setWeatherData(weatherApiData);
             localStorage.setItem('localWeatherData', JSON.stringify(weatherApiData));
           }
@@ -65,10 +67,9 @@ export default function Page() {
             </div>
           </div>
         ) : (
-          <div className="h-[125vh]">
-
-          </div>
-        )}
+          <div className="h-[125vh]"></div>
+        )
+      }
     </div>
   );
 };

@@ -1,6 +1,6 @@
 "use client"
 
-import { WeatherJsonData } from "@/components/server/WeatherApi";
+import { WeatherJsonData } from "@/helpers/types";
 import TempChart from "@/components/client/TempChart";
 
 export default function ChartSection(weatherData: WeatherJsonData) {

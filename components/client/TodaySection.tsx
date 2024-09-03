@@ -1,6 +1,8 @@
-import { WeatherJsonData } from "@/components/server/WeatherApi";
+"use client"
+
+import { WeatherJsonData } from '@/helpers/types';
 import Image from 'next/image'
-import { WeatherIcon } from "@/components/client/WeatherIcon";
+import { weatherIcon } from '@/helpers/data-processing';
 
 interface TempsItem {
     time: number,
@@ -21,7 +23,7 @@ function WeatherDisplay(time: number, weather: string, temp: number) {
             <span className="text-[#6C7989] font-semibold text-base sm:text-2xl self-center">{stringedTime}</span>
             <div className="h-auto flex flex-row justify-center items-center">
                 <div className="h-[5vh] sm:h-[10vh] w-auto relative mr-1 sm:mr-2 my-5 sm:my-8">
-                    <Image src={WeatherIcon(weather, Number(time.toString().slice(0, -2)))!} alt="" width={1} height={1} style={{ objectFit: 'contain', width: "auto", height: '100%' }} className="min-w-[40px]" />
+                    <Image src={weatherIcon(weather, Number(time.toString().slice(0, -2)))!} alt="" width={1} height={1} style={{ objectFit: 'contain', width: "auto", height: '100%' }} className="min-w-[40px]" />
                 </div>
             </div>
             <span className="text-white font-semibold text-base sm:text-2xl ml-2 sm:ml-4 self-center">{weather}</span>

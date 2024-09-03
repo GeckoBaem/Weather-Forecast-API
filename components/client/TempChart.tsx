@@ -5,7 +5,7 @@ import { Line } from 'react-chartjs-2';
 import 'chart.js/auto';
 import { Chart } from 'chart.js';
 import ChartDataLabels from 'chartjs-plugin-datalabels';
-import { WeatherJsonData } from '../server/WeatherApi';
+import { WeatherJsonData } from '@/helpers/types';
 
 interface TempsItem {
     time: number,
