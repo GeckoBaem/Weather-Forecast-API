@@ -1,7 +1,6 @@
-"use server"
 
-import { WeatherRawDataItem } from "../../helpers/types";
-import { baseTime, baseDate } from "../../helpers/constants";
+import { WeatherRawDataItem } from "./types";
+import { baseTime, baseDate } from "./constants";
 
 const WEATHER_API_KEY="dU%2BOqCWkXbIpwVo9EFSmbZ4VtoCsJ7FbVq0WJs2not9GC7gjHcXgd8ZPJZ57PA1xAhllJvglheuyLbVrLA7nQw%3D%3D"
 const GEOLOCATION_API_KEY="E35AE60ABC902492020D0A6B2851E6CA"

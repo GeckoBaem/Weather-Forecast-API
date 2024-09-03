@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from "react"
-import { getClientIp } from "@/components/server/api-connecter";
+import { getClientIp } from "@/helpers/api-connecter";
 import { GetAddressItem, WeatherJsonData } from "@/helpers/types";
 import { getAddress, isDay, weatherIcon } from "@/helpers/data-processing";
 import Image from 'next/image'

@@ -1,6 +1,6 @@
 import { baseTime, baseDate } from "./constants";
 import { WeatherRawDataItem, Coordinate } from "./types";
-import { getClientIp, getClientLocation, getWeatherData, addressTransform } from "../components/server/api-connecter";
+import { getClientIp, getClientLocation, getWeatherData, addressTransform } from "./api-connecter";
 
 
 
