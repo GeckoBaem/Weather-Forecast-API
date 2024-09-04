@@ -33,27 +33,27 @@ export default function MainSection(weatherData: WeatherJsonData) {
     }, [])
 
 
-    useEffect(() => {
-        async function FetchClientData() {
-            const clientIp = await getClientIp();
+    // useEffect(() => {
+    //     async function FetchClientData() {
+    //         const clientIp = await getClientIp();
 
-            const getLocalAddressData = await JSON.parse(localStorage.getItem('localAddressData')!);
-            try {
-                if (await typeof window !== 'undefined') {
-                    if (getLocalAddressData && clientIp == getLocalAddressData.clientIp) {
-                        setAddressData(getLocalAddressData);
-                    } else {
-                        const catchAddress = await getAddress();
-                        setAddressData(catchAddress);
-                        localStorage.setItem('localAddressData', JSON.stringify(catchAddress));
-                    }
-                }
-            } catch (error) {
-                console.error(error);
-            }
-        }
-        FetchClientData();
-    }, [])
+    //         const getLocalAddressData = await JSON.parse(localStorage.getItem('localAddressData')!);
+    //         try {
+    //             if (await typeof window !== 'undefined') {
+    //                 if (getLocalAddressData && clientIp == getLocalAddressData.clientIp) {
+    //                     setAddressData(getLocalAddressData);
+    //                 } else {
+    //                     const catchAddress = await getAddress();
+    //                     setAddressData(catchAddress);
+    //                     localStorage.setItem('localAddressData', JSON.stringify(catchAddress));
+    //                 }
+    //             }
+    //         } catch (error) {
+    //             console.error(error);
+    //         }
+    //     }
+    //     FetchClientData();
+    // }, [])
     
     return (
         <div className="overflow-hidden mb-2 sm:mb-4">
