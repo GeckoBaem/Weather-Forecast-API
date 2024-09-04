@@ -24,7 +24,7 @@ export default function MainSection(weatherData: WeatherJsonData) {
         const minutes = now.getMinutes().toString().padStart(2, '0');
         return `${hours}:${minutes}`;
     }
-    
+
     useEffect(() => {
         const intervalId = setInterval(() => {
             setClientTime(GetTime());
@@ -32,10 +32,21 @@ export default function MainSection(weatherData: WeatherJsonData) {
         return () => clearInterval(intervalId);
     }, [])
 
+    async function getAddress() {
+        const clientLocation = await getClientCoordinate();
+        const latitude = clientLocation.latitude;
+        const longitude = clientLocation.longitude;
+        const clientIp = clientLocation.clientIp;
+        console.log("fheld")
+
+        const throwData = await addressTransform(latitude, longitude);
+        return ({ address: throwData!, clientIp: clientIp });
+    }
+
+
     useEffect(() => {
         async function FetchClientData() {
             const clientIp = await getClientIp();
-            console.log(clientIp)
 
             const getLocalAddressData = await JSON.parse(localStorage.getItem('localAddressData')!);
             try {
@@ -43,13 +54,9 @@ export default function MainSection(weatherData: WeatherJsonData) {
                     if (getLocalAddressData && clientIp == getLocalAddressData.clientIp) {
                         setAddressData(getLocalAddressData);
                     } else {
-                        const clientLocation = await getClientCoordinate();
-                        const latitude = clientLocation.latitude;
-                        const longitude = clientLocation.longitude;
-                        const clientIp = clientLocation.clientIp;
-                        console.log("fheld")
-                        const throwData = await addressTransform(latitude, longitude);
-                        setAddressData({ address: throwData!, clientIp: clientIp });
+                        const catchAddress = await getAddress();
+                        setAddressData(catchAddress);
+                        localStorage.setItem('localAddressData', JSON.stringify(catchAddress));
                     }
                 }
             } catch (error) {
@@ -57,8 +64,8 @@ export default function MainSection(weatherData: WeatherJsonData) {
             }
         }
         FetchClientData();
+        console.log(addressData)
     }, [])
-    localStorage.setItem('localAddressData', JSON.stringify(addressData));
     
     return (
         <div className="overflow-hidden mb-2 sm:mb-4">
