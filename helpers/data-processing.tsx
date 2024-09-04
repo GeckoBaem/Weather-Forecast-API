@@ -1,10 +1,14 @@
 "use client"
 
-import { baseTime, baseDate } from "@/app/layout";
 import { WeatherRawDataItem, Coordinate } from "./types";
 import { getClientLocation, getWeatherData } from "../app/api/api-connecter";
 
+const now = new Date();
+const baseDate = now.toISOString().slice(0, 10).replace(/-/g, "");
 
+// 기상청 API 업데이트 때매 30분 기준으로 베이스 시각 정함
+const setBaseTime = `${String(now.getHours()).padStart(2, '0')}30`;
+const baseTime = now.getMinutes() < 30 ? String(Number(setBaseTime) - 100).padStart(4, '0') : setBaseTime;
 
 /**
  * 

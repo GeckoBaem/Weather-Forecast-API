@@ -1,7 +1,14 @@
 "use server"
 
 import { WeatherRawDataItem } from "../../helpers/types";
-import { baseTime, baseDate } from "@/app/layout";
+// import { baseTime, baseDate } from "@/app/layout";
+
+const now = new Date();
+const baseDate = now.toISOString().slice(0, 10).replace(/-/g, "");
+
+// 기상청 API 업데이트 때매 30분 기준으로 베이스 시각 정함
+const setBaseTime = `${String(now.getHours()).padStart(2, '0')}30`;
+const baseTime = now.getMinutes() < 30 ? String(Number(setBaseTime) - 100).padStart(4, '0') : setBaseTime;
 
 /**
  * 
@@ -51,11 +58,9 @@ export async function addressTransform(latitude: number, longitude: number) {
     try {
         const res = await fetch(`https://api.vworld.kr/req/address?service=address&request=GetAddress&key=${process.env.GEOCODER_API_KEY}&point=${longitude},${latitude}&type=BOTH`)
             .then(res => res.json());
-        console.log(res.response.result)
         switch (res.response.status) {
             case "OK":
                 JSON.stringify(res);
-                console.log("잘 던짐~~~~")
                 return `${res.response.result[0].structure.level2} ${res.response.result[0].structure.level4L}`;
             case "NOT_FOUND":
                 return "정보를 찾을 수 없는 지역입니다.";
