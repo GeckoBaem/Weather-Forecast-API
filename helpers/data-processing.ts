@@ -116,6 +116,7 @@ export async function getAddress() {
     const latitude = clientLocation.latitude;
     const longitude = clientLocation.longitude;
     const clientIp = clientLocation.clientIp;
+    console.log(latitude, longitude)
 
     const throwData = await addressTransform(latitude, longitude);
     return {address: throwData!, clientIp: clientIp};
