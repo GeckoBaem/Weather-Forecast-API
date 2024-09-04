@@ -1,8 +1,8 @@
 "use client"
 
 import { useEffect, useState } from "react";
-import { processWeatherRawData } from "@/helpers/data-processing";
-import { WeatherJsonData } from "@/helpers/types";
+import { processWeatherRawData, getAddress, getClientIp } from "@/helpers/data-processing";
+import { WeatherJsonData, GetAddressItem } from "@/helpers/types";
 import MainSection from "@/components/client/MainSection";
 import ChartSection from "@/components/client/ChartSection";
 import TodaySection from "@/components/client/TodaySection";
@@ -39,15 +39,40 @@ export default function Page() {
     FetchClientData();
   }, []);
 
+  const [addressData, setAddressData] = useState<GetAddressItem | null>(null);
+
+  useEffect(() => {
+    async function FetchClientData() {
+        const clientIp = await getClientIp();
+
+        const getLocalAddressData = await JSON.parse(localStorage.getItem('localAddressData')!);
+        try {
+            if (await typeof window !== 'undefined') {
+                if (getLocalAddressData && clientIp == getLocalAddressData.clientIp) {
+                    setAddressData(getLocalAddressData);
+                } else {
+                    const catchAddress = await getAddress();
+                    setAddressData(catchAddress);
+                    localStorage.setItem('localAddressData', JSON.stringify(catchAddress));
+                }
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    }
+    FetchClientData();
+}, [])
+
   return (
     <div>
       <br />
-      {weatherData ?
+      {weatherData && addressData ?
         (
           <div>
             <div className='w-full grid grid-cols-1 sm:grid-cols-[55%_45%]'>
               <div className="flex flex-col sm:mx-3 h-auto">
                 <MainSection {...weatherData} />
+                <div>{`${addressData.address}`}</div>
                 <ChartSection {...weatherData} />
                 <div className="animate-fade-in h-[25vh] sm:h-[40vh] min-w-[335px] max-w-full bg-[#1E2836] rounded-3xl p-4 sm:p-6 relative overflow-hidden sm:mb-4">
                   <span className="text-[#6C7989] font-semibold text-sm sm:text-xl w-full">Air conditions</span>
