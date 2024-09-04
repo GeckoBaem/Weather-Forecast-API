@@ -58,7 +58,8 @@ export async function addressTransform(latitude: number, longitude: number) {
     console.log(latitude, longitude)
     try {
         const res = await fetch(`https://api.vworld.kr/req/address?service=address&request=GetAddress&key=${process.env.GEOCODER_API_KEY}&point=${longitude},${latitude}&type=BOTH`)
-            .then((res) => {console.log(res); return res.json()});
+            .then((res) => res.json());
+        console.log(res);
         switch (res.response.status) {
             case "OK":
                 JSON.stringify(res);
