@@ -1,3 +1,5 @@
+"use client"
+
 const now = new Date();
 
 // 기상청 APi 호출용, 20240902 형식
