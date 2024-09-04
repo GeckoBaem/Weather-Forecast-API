@@ -1,9 +1,9 @@
 'use client'
 
 import { useEffect, useState } from "react"
-import { getClientIp } from "@/helpers/data-processing";
 import { GetAddressItem, WeatherJsonData } from "@/helpers/types";
-import { getAddress, isDay, weatherIcon } from "@/helpers/data-processing";
+import { getClientCoordinate, isDay, weatherIcon, getClientIp } from "@/helpers/data-processing";
+import { addressTransform } from "@/app/api/api-connecter";
 import Image from 'next/image'
 
 interface TempsItem {
@@ -24,7 +24,7 @@ export default function MainSection(weatherData: WeatherJsonData) {
         const minutes = now.getMinutes().toString().padStart(2, '0');
         return `${hours}:${minutes}`;
     }
-
+    
     useEffect(() => {
         const intervalId = setInterval(() => {
             setClientTime(GetTime());
@@ -42,8 +42,14 @@ export default function MainSection(weatherData: WeatherJsonData) {
                     if (getLocalAddressData && clientIp == getLocalAddressData.clientIp) {
                         setAddressData(getLocalAddressData);
                     } else {
-                        const addressData = await getAddress();
-                        setAddressData(addressData);
+                        const clientLocation = await getClientCoordinate();
+                        const latitude = clientLocation.latitude;
+                        const longitude = clientLocation.longitude;
+                        const clientIp = clientLocation.clientIp;
+
+                        const throwData = await addressTransform(latitude, longitude);
+
+                        setAddressData({ address: throwData!, clientIp: clientIp });
                         localStorage.setItem('localAddressData', JSON.stringify(addressData));
                     }
                 }
@@ -105,7 +111,7 @@ export default function MainSection(weatherData: WeatherJsonData) {
                             <Image src={weatherIcon(weatherData.translatedWeathers[0], clientHour)!} alt="" width={1} height={1} style={{ objectFit: 'contain', width: "auto", height: '100%' }} className="min-w-[80px] animate-float" />
                         </div>
                     </div>
-                    
+
                 )
                 :
                 (

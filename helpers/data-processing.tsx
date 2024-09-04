@@ -1,8 +1,8 @@
 "use client"
 
-import { baseTime, baseDate } from "./constants";
+import { baseTime, baseDate } from "@/app/layout";
 import { WeatherRawDataItem, Coordinate } from "./types";
-import { getClientLocation, getWeatherData, addressTransform } from "../app/api/api-connecter";
+import { getClientLocation, getWeatherData } from "../app/api/api-connecter";
 
 
 
@@ -112,17 +112,6 @@ export async function getClientCoordinate() {
 
 
 
-
-export async function getAddress() {
-    const clientLocation = await getClientCoordinate();
-    const latitude = clientLocation.latitude;
-    const longitude = clientLocation.longitude;
-    const clientIp = clientLocation.clientIp;
-
-    const throwData = await addressTransform(latitude, longitude);
-    console.log(throwData)
-    return {address: throwData!, clientIp: clientIp};
-}
 
 // 좌표 변환 함수
 async function dfsXyTransform(v1: number, v2: number): Promise<Coordinate> {
