@@ -104,6 +104,7 @@ export function weatherTranslation (skyFormCode: number, fallingFormCode: number
 // client IP 바탕 위치 탐색
 export async function getClientCoordinate() {
     const clientIp = await getClientIp();
+    console.log("참조한 아이피 : " + clientIp)
     const [latitude, longitude] = await getClientLocation(clientIp)
     console.log(`위경도: ${latitude}, ${longitude}`)
     return { latitude: latitude, longitude: longitude, clientIp: clientIp }
