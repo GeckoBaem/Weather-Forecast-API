@@ -58,19 +58,19 @@ export async function addressTransform(latitude: number, longitude: number) {
     console.log(latitude, longitude)
     try {
         const res = await fetch(`https://api.vworld.kr/req/address?service=address&request=GetAddress&key=${process.env.GEOCODER_API_KEY}&point=${longitude},${latitude}&type=BOTH`)
-            .then((res) => res.json());
+            .then((res) => res.text());
         console.log("constrcutor-name: ", res.constructor.name);
         console.log("Type: ", typeof res);
         console.log("Here ", res);
-        switch (res.response.status) {
-            case "OK":
-                JSON.stringify(res);
-                return `${res.response.result[0].structure.level2} ${res.response.result[0].structure.level4L}`;
-            case "NOT_FOUND":
-                return "정보를 찾을 수 없는 지역입니다.";
-            case "ERROR":
-                throw res.response.error.text;
-        }
+        // switch (res.response.status) {
+        //     case "OK":
+        //         JSON.stringify(res);
+        //         return `${res.response.result[0].structure.level2} ${res.response.result[0].structure.level4L}`;
+        //     case "NOT_FOUND":
+        //         return "정보를 찾을 수 없는 지역입니다.";
+        //     case "ERROR":
+        //         throw res.response.error.text;
+        // }
     } catch (error) {
         console.error( `GeoCoder API 에러: ${error}`);
     }
