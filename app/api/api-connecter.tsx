@@ -51,10 +51,11 @@ export async function addressTransform(latitude: number, longitude: number) {
     try {
         const res = await fetch(`https://api.vworld.kr/req/address?service=address&request=GetAddress&key=${process.env.GEOCODER_API_KEY}&point=${longitude},${latitude}&type=BOTH`)
             .then(res => res.json());
-        console.log(res.response.result[0])
+        console.log("잘 실행 됨~~~")
         switch (res.response.status) {
             case "OK":
                 JSON.stringify(res);
+                console.log("잘 던짐~~~~")
                 return `${res.response.result[0].structure.level2} ${res.response.result[0].structure.level4L}`;
             case "NOT_FOUND":
                 return "정보를 찾을 수 없는 지역입니다.";
