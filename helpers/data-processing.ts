@@ -13,7 +13,7 @@ export async function processWeatherRawData() {
     const nx = transformedLocation.nx;
     const ny = transformedLocation.ny;
     const rawWeatherData = await getWeatherData(nx, ny);
-    console.log(nx, ny)
+    console.log("변환 데이터 : " + nx, ny)
     console.log(rawWeatherData)
 
     if (!rawWeatherData) return null;
@@ -105,6 +105,7 @@ export function weatherTranslation (skyFormCode: number, fallingFormCode: number
 export async function getClientCoordinate() {
     const clientIp = await getClientIp();
     const [latitude, longitude] = await getClientLocation(clientIp)
+    console.log(`위경도: ${latitude}, ${longitude}`)
     return { latitude: latitude, longitude: longitude, clientIp: clientIp }
 }
 
