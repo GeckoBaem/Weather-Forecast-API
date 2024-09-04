@@ -13,6 +13,8 @@ export async function processWeatherRawData() {
     const nx = transformedLocation.nx;
     const ny = transformedLocation.ny;
     const rawWeatherData = await getWeatherData(nx, ny);
+    console.log(nx, ny)
+    console.log(rawWeatherData)
 
     if (!rawWeatherData) return null;
 
