@@ -13,7 +13,7 @@ export async function processWeatherRawData(baseDate: string, baseTime: string) 
     const clientBaseTime = baseTime;
     const nx = transformedLocation.nx;
     const ny = transformedLocation.ny;
-    const rawWeatherData = await getWeatherData(nx, ny);
+    const rawWeatherData = await getWeatherData(nx, ny, clientBaseDate, clientBaseTime);
     const WeatherData = rawWeatherData!.throwData;
 
     if (rawWeatherData?.resultCode !== "00") return "NotFound";

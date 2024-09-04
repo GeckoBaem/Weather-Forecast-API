@@ -3,13 +3,6 @@
 import { WeatherRawDataItem } from "../../helpers/types";
 // import { baseTime, baseDate } from "@/app/layout";
 
-const now = new Date();
-const baseDate = now.toISOString().slice(0, 10).replace(/-/g, "");
-
-// 기상청 API 업데이트 때매 30분 기준으로 베이스 시각 정함
-const setBaseTime = `${String(now.getHours()).padStart(2, '0')}30`;
-const baseTime = now.getMinutes() < 30 ? String(Number(setBaseTime) - 100).padStart(4, '0') : setBaseTime;
-
 /**
  * 
  * @param nx 기상청 좌표 X축
@@ -17,7 +10,7 @@ const baseTime = now.getMinutes() < 30 ? String(Number(setBaseTime) - 100).padSt
  * @returns [{fcstValue, fcstTime, category}, ...]
  * @throws Error 출력 상태 존재
  */
-export async function getWeatherData(nx: number, ny: number) {
+export async function getWeatherData(nx: number, ny: number, baseDate: string, baseTime: string) {
     try {
         const res = await fetch(`http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getUltraSrtFcst?serviceKey=${process.env.WEATHER_API_KEY}&pageNo=1&numOfRows=70&dataType=JSON&base_date=${baseDate}&base_time=${baseTime}&nx=${nx}&ny=${ny}`)
             .then(res => res.json());
