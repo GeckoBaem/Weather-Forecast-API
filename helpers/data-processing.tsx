@@ -1,7 +1,7 @@
 "use client"
 
 import { WeatherRawDataItem, Coordinate } from "./types";
-import { getClientLocation, getWeatherData } from "../app/api/api-connecter";
+import { getClientLocation, getWeatherData, addressTransform } from "../app/api/api-connecter";
 
 /**
  * 
@@ -238,4 +238,18 @@ export async function getClientIp() {
         console.log(`클라이언트 IP 획득 실패: ${error}`)
         return ""; // 학교~ (임시방편)
     }
+}
+
+
+
+
+
+export async function getAddress() {
+    const clientLocation = await getClientCoordinate();
+    const latitude = clientLocation.latitude;
+    const longitude = clientLocation.longitude;
+    const clientIp = clientLocation.clientIp;
+
+    const throwData = await addressTransform(latitude, longitude);
+    return ({ address: throwData!, clientIp: clientIp });
 }

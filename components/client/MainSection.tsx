@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { GetAddressItem, WeatherJsonData } from "@/helpers/types";
-import { getClientCoordinate, isDay, weatherIcon, getClientIp } from "@/helpers/data-processing";
+import { getClientCoordinate, isDay, weatherIcon, getClientIp, getAddress } from "@/helpers/data-processing";
 import { addressTransform } from "@/app/api/api-connecter";
 import Image from 'next/image'
 
@@ -32,17 +32,6 @@ export default function MainSection(weatherData: WeatherJsonData) {
         return () => clearInterval(intervalId);
     }, [])
 
-    async function getAddress() {
-        const clientLocation = await getClientCoordinate();
-        const latitude = clientLocation.latitude;
-        const longitude = clientLocation.longitude;
-        const clientIp = clientLocation.clientIp;
-        console.log("fheld")
-
-        const throwData = await addressTransform(latitude, longitude);
-        return ({ address: throwData!, clientIp: clientIp });
-    }
-
 
     useEffect(() => {
         async function FetchClientData() {
@@ -60,11 +49,10 @@ export default function MainSection(weatherData: WeatherJsonData) {
                     }
                 }
             } catch (error) {
-                console.log(error);
+                console.error(error);
             }
         }
         FetchClientData();
-        console.log(addressData)
     }, [])
     
     return (
