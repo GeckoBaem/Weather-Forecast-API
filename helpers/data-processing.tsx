@@ -1,3 +1,5 @@
+"use client"
+
 import { baseTime, baseDate } from "./constants";
 import { WeatherRawDataItem, Coordinate } from "./types";
 import { getClientLocation, getWeatherData, addressTransform } from "../app/api/api-connecter";
