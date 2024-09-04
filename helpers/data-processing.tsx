@@ -3,19 +3,14 @@
 import { WeatherRawDataItem, Coordinate } from "./types";
 import { getClientLocation, getWeatherData } from "../app/api/api-connecter";
 
-const now = new Date();
-const baseDate = now.toISOString().slice(0, 10).replace(/-/g, "");
-
-// 기상청 API 업데이트 때매 30분 기준으로 베이스 시각 정함
-const setBaseTime = `${String(now.getHours()).padStart(2, '0')}30`;
-const baseTime = now.getMinutes() < 30 ? String(Number(setBaseTime) - 100).padStart(4, '0') : setBaseTime;
-
 /**
  * 
  * @returns { temps, skyForms, fallingForms, translatedWeathers, baseDate, baseTime }
  */
-export async function processWeatherRawData() {
+export async function processWeatherRawData(baseDate: string, baseTime: string) {
     const transformedLocation = await coordinateSysTransform();
+    const clientBaseDate = baseDate;
+    const clientBaseTime = baseTime;
     const nx = transformedLocation.nx;
     const ny = transformedLocation.ny;
     const rawWeatherData = await getWeatherData(nx, ny);
@@ -54,7 +49,7 @@ export async function processWeatherRawData() {
         return weatherTranslation(skyCode, fallingCodes[index]);
     });
 
-    return { temps: temps, skyForms: skyForms, fallingForms: fallingForms, translatedWeathers: translatedWeathers, baseDate: baseDate, baseTime: baseTime };
+    return { temps: temps, skyForms: skyForms, fallingForms: fallingForms, translatedWeathers: translatedWeathers, baseDate: clientBaseDate, baseTime: clientBaseTime };
 }
 
 // 기상 싱태 코드 변환

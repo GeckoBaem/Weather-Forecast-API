@@ -35,6 +35,7 @@ export default function MainSection(weatherData: WeatherJsonData) {
     useEffect(() => {
         async function FetchClientData() {
             const clientIp = await getClientIp();
+            console.log(clientIp)
 
             const getLocalAddressData = await JSON.parse(localStorage.getItem('localAddressData')!);
             try {
@@ -46,11 +47,9 @@ export default function MainSection(weatherData: WeatherJsonData) {
                         const latitude = clientLocation.latitude;
                         const longitude = clientLocation.longitude;
                         const clientIp = clientLocation.clientIp;
-
+                        console.log("fheld")
                         const throwData = await addressTransform(latitude, longitude);
-
                         setAddressData({ address: throwData!, clientIp: clientIp });
-                        localStorage.setItem('localAddressData', JSON.stringify(addressData));
                     }
                 }
             } catch (error) {
@@ -59,7 +58,8 @@ export default function MainSection(weatherData: WeatherJsonData) {
         }
         FetchClientData();
     }, [])
-
+    localStorage.setItem('localAddressData', JSON.stringify(addressData));
+    
     return (
         <div className="overflow-hidden mb-2 sm:mb-4">
             {weatherData && addressData ?

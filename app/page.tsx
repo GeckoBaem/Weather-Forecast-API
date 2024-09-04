@@ -23,7 +23,7 @@ export default function Page() {
           if (getLocalWeatherData && baseDate === getLocalWeatherData.baseDate && baseTime === getLocalWeatherData.baseTime) {
             setWeatherData(await getLocalWeatherData);
           } else {
-            const weatherApiData = await processWeatherRawData();
+            const weatherApiData = await processWeatherRawData(baseDate, baseTime);
             if (weatherApiData !== "NotFound") {
               setWeatherData(weatherApiData)
               localStorage.setItem('localWeatherData', JSON.stringify(weatherApiData));

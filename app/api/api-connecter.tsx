@@ -55,6 +55,7 @@ export async function getClientLocation(clientIp: string) { // 눈찢계 <- 이�
  * @throws Error 출력 상태 존재
  */
 export async function addressTransform(latitude: number, longitude: number) {
+    console.log(latitude, longitude)
     try {
         const res = await fetch(`https://api.vworld.kr/req/address?service=address&request=GetAddress&key=${process.env.GEOCODER_API_KEY}&point=${longitude},${latitude}&type=BOTH`)
             .then(res => res.json());
