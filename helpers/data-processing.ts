@@ -1,6 +1,6 @@
 import { baseTime, baseDate } from "./constants";
 import { WeatherRawDataItem, Coordinate } from "./types";
-import { getClientIp, getClientLocation, getWeatherData, addressTransform } from "../app/api/api-connecter";
+import { getClientLocation, getWeatherData, addressTransform } from "../app/api/api-connecter";
 
 
 
@@ -230,5 +230,26 @@ export function weatherIcon(weatherStatus: string, getClientTime: number) {
             return "/static/images/dew-snowstorm.svg"
         case '눈날림':
             return "/static/images/snowstorm.svg"
+    }
+}
+
+
+
+
+
+/**
+ * 
+ * @returns client IP <string>
+ */
+export async function getClientIp() {
+    try {
+        const res = await fetch("https://ifconfig.me/ip");
+        const rawClientIp = res.text();
+        console.log("API 잘 작동 2")
+        console.log("가져온 아이피 : " + rawClientIp)
+        return rawClientIp;
+    } catch (error) {
+        console.log(`클라이언트 IP 획득 실패: ${error}`)
+        return ""; // 학교~ (임시방편)
     }
 }
