@@ -20,10 +20,10 @@ export async function getWeatherData(nx: number, ny: number) {
             fcstTime: data.fcstTime,
             category: data.category
         }))
-        console.log("API 잘 작동 1")
-        return throwData;
+        const resultCode = res.response.header.resultCode;
+        return {throwData: throwData, resultCode: resultCode};
     } catch (error) {
-        return `Weather API: 정보를 불러올 수 없습니다. Status: ${error}`;
+        console.error(`Weather API: 정보를 불러올 수 없습니다. Status: ${error}`);
     }
 }
 
@@ -35,9 +35,8 @@ export async function getWeatherData(nx: number, ny: number) {
 export async function getClientLocation(clientIp: string) { // 눈찢계 <- 이거 누가 씀???;;
     const res = await fetch(`https://api.ip2location.io/?key=${process.env.GEOLOCATION_API_KEY}&ip=${clientIp}`)
         .then(res => res.json())
-    const latitude: number = res.latitude;
-    const longitude: number = res.longitude;
-    console.log("API 잘 작동 3")
+    const latitude: number = Number(res.latitude);
+    const longitude: number = Number(res.longitude);
     return [latitude, longitude]
 }
 
@@ -52,7 +51,7 @@ export async function addressTransform(latitude: number, longitude: number) {
     try {
         const res = await fetch(`https://api.vworld.kr/req/address?service=address&request=GetAddress&key=${process.env.GEOCODER_API_KEY}&point=${longitude},${latitude}&type=BOTH`)
             .then(res => res.json());
-
+        console.log(res.response.result[0])
         switch (res.response.status) {
             case "OK":
                 JSON.stringify(res);
@@ -62,8 +61,7 @@ export async function addressTransform(latitude: number, longitude: number) {
             case "ERROR":
                 throw res.response.error.text;
         }
-        console.log("API 잘 작동 4")
     } catch (error) {
-        return `GeoCoder API 에러: ${error}`
+        console.error( `GeoCoder API 에러: ${error}`);
     }
 }

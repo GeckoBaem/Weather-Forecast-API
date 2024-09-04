@@ -9,6 +9,7 @@ import TodaySection from "@/components/client/TodaySection";
 
 export default function Page() {
   const [weatherData, setWeatherData] = useState<WeatherJsonData | null>(null);
+  const [isHave, setIsHave] = useState<boolean>(true);
 
   useEffect(() => {
     async function FetchClientData() {
@@ -23,8 +24,12 @@ export default function Page() {
             setWeatherData(await getLocalWeatherData);
           } else {
             const weatherApiData = await processWeatherRawData();
-            setWeatherData(weatherApiData);
-            localStorage.setItem('localWeatherData', JSON.stringify(weatherApiData));
+            if (weatherApiData !== "NotFound") {
+              setWeatherData(weatherApiData)
+              localStorage.setItem('localWeatherData', JSON.stringify(weatherApiData));
+            } else {
+              setIsHave(false)
+            }
           }
         }
       } catch (error) {
@@ -65,7 +70,13 @@ export default function Page() {
               </div>
             </div>
           </div>
-        ) : (
+        ) : isHave === false ? (
+          <div className="text-white text-bold text-3xl text-center w-full h-[75vh]">
+            날씨 정보를 불러올 수 없습니다.
+          </div>
+        )
+        :
+        (
           <div className="h-[125vh]"></div>
         )
       }

@@ -13,34 +13,33 @@ export async function processWeatherRawData() {
     const nx = transformedLocation.nx;
     const ny = transformedLocation.ny;
     const rawWeatherData = await getWeatherData(nx, ny);
-    console.log("변환 데이터 : " + nx, ny)
-    console.log(rawWeatherData)
+    const WeatherData = rawWeatherData!.throwData;
 
-    if (!rawWeatherData) return null;
+    if (rawWeatherData?.resultCode !== "00") return "NotFound";
 
-    const temps = rawWeatherData
+    const temps = WeatherData
         .filter((weatherData: WeatherRawDataItem) => weatherData.category == "T1H")
         .map((weatherData: WeatherRawDataItem) => ({
             temp: weatherData.fcstValue,
             time: weatherData.fcstTime
         }));
-    const skyForms = rawWeatherData
+    const skyForms = WeatherData
         .filter((weatherData: WeatherRawDataItem) => weatherData.category == "SKY")
         .map((weatherData: WeatherRawDataItem) => ({
             skyForm: skyFormTranslation(Number(weatherData.fcstValue)),
             time: weatherData.fcstTime
         }))
-    const fallingForms = rawWeatherData
+    const fallingForms = WeatherData
         .filter((weatherData: WeatherRawDataItem) => weatherData.category == "PTY")
         .map((weatherData: WeatherRawDataItem) => ({
             fallingForm: fallingFormTranslation(Number(weatherData.fcstValue)),
             time: weatherData.fcstTime
         }))
 
-    const skyCodes = rawWeatherData
+    const skyCodes = WeatherData
     .filter((weatherData: WeatherRawDataItem) => weatherData.category == "SKY")
     .map((weatherData: WeatherRawDataItem) => Number(weatherData.fcstValue))
-    const fallingCodes = rawWeatherData
+    const fallingCodes = WeatherData
     .filter((weatherData: WeatherRawDataItem) => weatherData.category == "PTY")
     .map((weatherData: WeatherRawDataItem) => Number(weatherData.fcstValue))
 
@@ -104,9 +103,7 @@ export function weatherTranslation (skyFormCode: number, fallingFormCode: number
 // client IP 바탕 위치 탐색
 export async function getClientCoordinate() {
     const clientIp = await getClientIp();
-    console.log("참조한 아이피 : " + clientIp)
     const [latitude, longitude] = await getClientLocation(clientIp)
-    console.log(`위경도: ${latitude}, ${longitude}`)
     return { latitude: latitude, longitude: longitude, clientIp: clientIp }
 }
 
@@ -245,8 +242,6 @@ export async function getClientIp() {
     try {
         const res = await fetch("https://ifconfig.me/ip");
         const rawClientIp = res.text();
-        console.log("API 잘 작동 2")
-        console.log("가져온 아이피 : " + rawClientIp)
         return rawClientIp;
     } catch (error) {
         console.log(`클라이언트 IP 획득 실패: ${error}`)
