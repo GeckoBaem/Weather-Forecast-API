@@ -23,7 +23,6 @@ export default function Page() {
             setWeatherData(await getLocalWeatherData);
           } else {
             const weatherApiData = await processWeatherRawData();
-            console.log("응디")
             setWeatherData(weatherApiData);
             localStorage.setItem('localWeatherData', JSON.stringify(weatherApiData));
           }
@@ -52,7 +51,7 @@ export default function Page() {
                   </div>
                 </div>
               </div>
-              <div className='sm:mx-3 sm:relative my-2 sm:my-4'>
+              <div className='sm:mx-3 sm:relative my-2 sm:my-4 sm:h-auto h-[50vh]'>
                 <div className="animate-fade-in min-w-[335px] max-w-full bg-[#1E2836] rounded-3xl flex flex-col h-full">
                   <div className="overflow-y-auto h-full">
                     <TodaySection {...weatherData} />
