@@ -47,19 +47,19 @@ export async function getClientLocation(clientIp: string) { // 눈찢계 <- 이�
  * @returns 지역명 출력 (용인시 처인구 김량장동)
  * @throws Error 출력 상태 존재
  */
+
+const headers = new Headers();
+headers.append('Authorization', `${process.env.KAKAO_GEOCODER_REST_KEY}`);
+
 export async function addressTransform(latitude: number, longitude: number) {
     try {
-        const res = await fetch(`https://api.vworld.kr/req/address?service=address&request=GetAddress&key=${process.env.GEOCODER_API_KEY}&point=${longitude},${latitude}&type=BOTH`)
+        const res = await fetch(`https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${longitude}&y=${latitude}&type=BOTH`, {
+            headers: {
+                Authorization: `KakaoAK ${process.env.KAKAO_GEOCODER_REST_KEY}`
+            }
+        })
             .then((res) => res.json());
-        switch (res.response.status) {
-            case "OK":
-                JSON.stringify(res);
-                return `${res.response.result[0].structure.level2} ${res.response.result[0].structure.level4L}`;
-            case "NOT_FOUND":
-                return "정보를 찾을 수 없는 지역입니다.";
-            case "ERROR":
-                throw res.response.error.text;
-        }
+            return `${res.documents[0].address.region_2depth_name} ${res.documents[0].address.region_3depth_name}`;
     } catch (error) {
         console.error(`GeoCoder API 에러: ${error}`);
     }
