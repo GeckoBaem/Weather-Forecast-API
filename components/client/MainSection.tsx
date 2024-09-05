@@ -2,8 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { GetAddressItem, WeatherJsonData } from "@/helpers/types";
-import { getClientCoordinate, isDay, weatherIcon, getClientIp, getAddress } from "@/helpers/data-processing";
-import { addressTransform } from "@/app/api/api-connecter";
+import { isDay, weatherIcon, getClientIp, getAddress } from "@/helpers/data-processing";
 import Image from 'next/image'
 
 interface TempsItem {
@@ -32,29 +31,28 @@ export default function MainSection(weatherData: WeatherJsonData) {
         return () => clearInterval(intervalId);
     }, [])
 
+    useEffect(() => {
+        async function FetchClientData() {
+            const clientIp = await getClientIp();
 
-    // useEffect(() => {
-    //     async function FetchClientData() {
-    //         const clientIp = await getClientIp();
+            const getLocalAddressData = await JSON.parse(localStorage.getItem('localAddressData')!);
+            try {
+                if (await typeof window !== 'undefined') {
+                    if (getLocalAddressData && clientIp == getLocalAddressData.clientIp) {
+                        setAddressData(getLocalAddressData);
+                    } else {
+                        const catchAddress = await getAddress();
+                        setAddressData(catchAddress);
+                        localStorage.setItem('localAddressData', JSON.stringify(catchAddress));
+                    }
+                }
+            } catch (error) {
+                console.error(error);
+            }
+        }
+        FetchClientData();
+    }, [])
 
-    //         const getLocalAddressData = await JSON.parse(localStorage.getItem('localAddressData')!);
-    //         try {
-    //             if (await typeof window !== 'undefined') {
-    //                 if (getLocalAddressData && clientIp == getLocalAddressData.clientIp) {
-    //                     setAddressData(getLocalAddressData);
-    //                 } else {
-    //                     const catchAddress = await getAddress();
-    //                     setAddressData(catchAddress);
-    //                     localStorage.setItem('localAddressData', JSON.stringify(catchAddress));
-    //                 }
-    //             }
-    //         } catch (error) {
-    //             console.error(error);
-    //         }
-    //     }
-    //     FetchClientData();
-    // }, [])
-    
     return (
         <div className="overflow-hidden mb-2 sm:mb-4">
             {weatherData && addressData ?

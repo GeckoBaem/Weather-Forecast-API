@@ -21,7 +21,7 @@ export async function getWeatherData(nx: number, ny: number, baseDate: string, b
             category: data.category
         }))
         const resultCode = res.response.header.resultCode;
-        return {throwData: throwData, resultCode: resultCode};
+        return { throwData: throwData, resultCode: resultCode };
     } catch (error) {
         console.error(`Weather API: 정보를 불러올 수 없습니다. Status: ${error}`);
     }
@@ -61,6 +61,6 @@ export async function addressTransform(latitude: number, longitude: number) {
                 throw res.response.error.text;
         }
     } catch (error) {
-        console.error( `GeoCoder API 에러: ${error}`);
+        console.error(`GeoCoder API 에러: ${error}`);
     }
 }
