@@ -1,7 +1,7 @@
 "use client"
 
 import { WeatherRawDataItem, Coordinate } from "./types";
-import { getClientLocation, getWeatherData, addressTransform } from "../app/api/api-connecter";
+import { getClientLocation, getWeatherData, addressTransform } from "../app/api-connecter";
 
 /**
  * 
